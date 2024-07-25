@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@phosphor-icons/react": "^2.1.7",
+    "@radix-ui/react-slot": "^1.1.0",
     "@refinedev/cli": "^2.16.21",
     "@refinedev/core": "^4.47.1",
     "@refinedev/devtools": "^1.1.32",
@@ -25,6 +26,7 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/node": "^20.14.11",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",

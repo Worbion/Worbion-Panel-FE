@@ -1,4 +1,4 @@
-import { AuthPage } from "@refinedev/core";
+import { AuthPage } from "@refinedev/core"
 
 export const Login = () => {
   return (
@@ -22,5 +22,5 @@ export const Login = () => {
         </div>
       )}
     />
-  );
-};
+  )
+}

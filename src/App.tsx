@@ -1,12 +1,12 @@
 import { Authenticated, Refine } from "@refinedev/core"
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar"
-
 import routerBindings, {
   CatchAllNavigate,
   NavigateToResource,
 } from "@refinedev/react-router-v6"
 import dataProvider from "@refinedev/simple-rest"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
+
 import "./App.css"
 import { authProvider } from "./authProvider"
 import { Layout } from "./components/layout"
