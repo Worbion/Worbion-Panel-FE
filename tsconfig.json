@@ -18,7 +18,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noUnusedLocals": false
   },
   "include": ["src"],
   "references": [
