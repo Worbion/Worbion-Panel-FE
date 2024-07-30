@@ -78,6 +78,7 @@ export const authProvider: AuthProvider = {
       redirectTo: "/login",
     }
   },
+  //@ts-ignore
   refreshTokens: async () => {
     try {
       const res = await axiosInstance.post("/auth/accessToken", {
