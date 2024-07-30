@@ -9,6 +9,9 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 import "./App.css"
 import { authProvider } from "./authProvider"
 import { Layout } from "./components/layout"
+import { RedirectAuthUser } from "./components/redirectAuthUser"
+import { CreateUser } from "./pages/create-user"
+import { Dashboard } from "./pages/dashboard"
 import { Login } from "./pages/login"
 
 function App() {
@@ -31,11 +34,14 @@ function App() {
                 </Layout>
               </Authenticated>
             }
-          ></Route>
+          >
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/create-user" element={<CreateUser />} />
+          </Route>
           <Route
             element={
               <Authenticated key="authenticated-outer" fallback={<Outlet />}>
-                <NavigateToResource />
+                <RedirectAuthUser />
               </Authenticated>
             }
           >

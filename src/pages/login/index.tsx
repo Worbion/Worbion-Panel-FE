@@ -1,3 +1,4 @@
+import { authProvider } from "@/authProvider"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -10,7 +11,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginFormTypes, useLogin } from "@refinedev/core"
+import Cookies from "js-cookie"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -28,6 +32,26 @@ const formSchema = z.object({
 })
 
 export const Login = () => {
+  const navigate = useNavigate()
+  const accessToken = Cookies.get("access_token")
+  const refreshToken = Cookies.get("refresh_token")
+
+  useEffect(() => {
+    const checkTokens = async () => {
+      if (accessToken) {
+        navigate("/")
+      } else if (!accessToken && refreshToken) {
+        await authProvider.refreshTokens()
+        const newAccessToken = Cookies.get("access_token")
+        if (newAccessToken) {
+          navigate("/")
+        }
+      }
+    }
+
+    checkTokens()
+  }, [accessToken, refreshToken, navigate])
+
   const { mutate: login } = useLogin<LoginFormTypes>()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,7 +63,6 @@ export const Login = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password } = values
-    console.log(values)
     login({ email, password })
   }
 

@@ -1,17 +1,33 @@
 import type { AuthProvider } from "@refinedev/core"
+import axios from "axios"
+import Cookies from "js-cookie"
+
+import { useAuthStore } from "../store/useAuthStore"
+import axiosInstance from "./network-instances/axiosInstance"
 
 export const TOKEN_KEY = "refine-auth"
 
 export const authProvider: AuthProvider = {
-  // implement actual login logic here when backend integration done
-  // for now, just store email in local storage
   login: async ({ email, password }) => {
     if (email && password) {
-      localStorage.setItem(TOKEN_KEY, email)
-      console.log("LOGIN SUCCESS")
-      return {
-        success: true,
-        redirectTo: "/",
+      try {
+        const res = await axios.post("https://api.worbion.com/auth/login", {
+          email,
+          password,
+        })
+        const { accessToken, refreshToken } = res.data.data
+        Cookies.set("access_token", accessToken, {
+          secure: true,
+        })
+        Cookies.set("refresh_token", refreshToken, {
+          secure: true,
+        })
+        return {
+          success: true,
+          redirectTo: "/",
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
 
@@ -24,23 +40,55 @@ export const authProvider: AuthProvider = {
     }
   },
   logout: async () => {
-    localStorage.removeItem(TOKEN_KEY)
+    useAuthStore.getState().clearTokens()
     return {
       success: true,
       redirectTo: "/login",
     }
   },
   check: async () => {
-    const token = localStorage.getItem(TOKEN_KEY)
+    const token = Cookies.get("access_token")
     if (token) {
       return {
         authenticated: true,
       }
     }
 
+    try {
+      const res = await axiosInstance.post("/auth/accessToken", {
+        refreshToken: Cookies.get("refresh_token"),
+      })
+      const { accessToken, refreshToken } = res.data.data
+      Cookies.set("access_token", accessToken, { httpOnly: true, secure: true })
+      Cookies.set("refresh_token", refreshToken, {
+        httpOnly: true,
+        secure: true,
+      })
+      if (accessToken) {
+        return {
+          authenticated: true,
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
+
     return {
       authenticated: false,
       redirectTo: "/login",
+    }
+  },
+  refreshTokens: async () => {
+    try {
+      const res = await axiosInstance.post("/auth/accessToken", {
+        refreshToken: Cookies.get("refresh_token"),
+      })
+      const { accessToken, refreshToken } = res.data.data
+      Cookies.set("access_token", accessToken)
+      Cookies.set("refresh_token", refreshToken)
+    } catch (error) {
+      console.error("error refreshing tokens: ", error)
+      throw error
     }
   },
   getPermissions: async () => null,
