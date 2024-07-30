@@ -12,13 +12,11 @@ export const RedirectAuthUser = () => {
     const checkTokens = async () => {
       const { authenticated } = await authProvider.check()
       if (authenticated) {
-        console.log("Authenticated")
         navigate("/")
       }
     }
 
     if (accessToken || refreshToken) {
-      console.log("Tokens found")
       checkTokens()
     }
   }, [accessToken, refreshToken, navigate])
