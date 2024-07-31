@@ -1,8 +1,6 @@
+import { Cube, User } from "@phosphor-icons/react"
 import { Authenticated, Refine } from "@refinedev/core"
-import routerBindings, {
-  CatchAllNavigate,
-  NavigateToResource,
-} from "@refinedev/react-router-v6"
+import routerBindings, { CatchAllNavigate } from "@refinedev/react-router-v6"
 import dataProvider from "@refinedev/simple-rest"
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom"
 
@@ -21,6 +19,18 @@ function App() {
         dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
         authProvider={authProvider}
         routerProvider={routerBindings}
+        resources={[
+          {
+            name: "Dashboard",
+            icon: <Cube size={16} />,
+            list: "/",
+          },
+          {
+            name: "Create User",
+            icon: <User size={16} />,
+            list: "/create-user",
+          },
+        ]}
       >
         <Routes>
           <Route
