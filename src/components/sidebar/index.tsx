@@ -9,7 +9,7 @@ import { Button } from "../ui/button"
 export const Sidebar = () => {
   const { mutate: logout } = useLogout()
   const { menuItems, selectedKey } = useMenu()
-  const { isOpen, setIsOpen } = useSidebarStore()
+  const { setIsOpen } = useSidebarStore()
 
   return (
     <motion.nav

@@ -11,6 +11,7 @@ import { RedirectAuthUser } from "./components/redirectAuthUser"
 import { CreateUser } from "./pages/create-user"
 import { Dashboard } from "./pages/dashboard"
 import { Login } from "./pages/login"
+import { NotFound } from "./pages/not-found"
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
           >
             <Route path="/login" element={<Login />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Refine>
     </BrowserRouter>
