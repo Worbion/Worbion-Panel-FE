@@ -8,6 +8,7 @@ import "./App.css"
 import { authProvider } from "./authProvider"
 import { Layout } from "./components/layout"
 import { RedirectAuthUser } from "./components/redirectAuthUser"
+import { BreadCrumb } from "./components/templates"
 import { CreateUser } from "./pages/create-user"
 import { Dashboard } from "./pages/dashboard"
 import { Login } from "./pages/login"
@@ -46,8 +47,22 @@ function App() {
               </Authenticated>
             }
           >
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/create-user" element={<CreateUser />} />
+            <Route
+              path="/"
+              element={
+                <BreadCrumb>
+                  <Dashboard />
+                </BreadCrumb>
+              }
+            />
+            <Route
+              path="/create-user"
+              element={
+                <BreadCrumb>
+                  <CreateUser />
+                </BreadCrumb>
+              }
+            />
           </Route>
           <Route
             element={
