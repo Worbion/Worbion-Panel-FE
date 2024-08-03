@@ -19,7 +19,9 @@ export const Sidebar = () => {
       transition={{ duration: 0.2 }}
       className="flex flex-col h-full p-4"
     >
-      <h1 className="text-zinc-900 text-2xl px-4">Worbion.</h1>
+      <a className="text-zinc-900 text-2xl px-4" href="/">
+        Worbion.
+      </a>
       <ul className="flex-grow space-y-2 my-6">
         {menuItems.map(({ key, label, route, icon }) => {
           const isSelected = key === selectedKey
