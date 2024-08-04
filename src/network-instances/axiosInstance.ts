@@ -1,4 +1,4 @@
-import { authProvider } from "@/providers/authProvider"
+import { authProvider } from "@/providers/auth-provider"
 import axios from "axios"
 import Cookies from "js-cookie"
 

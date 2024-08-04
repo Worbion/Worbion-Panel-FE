@@ -5,8 +5,6 @@ import Cookies from "js-cookie"
 import { useAuthStore } from "../../store/useAuthStore"
 import axiosInstance from "../network-instances/axiosInstance"
 
-export const TOKEN_KEY = "refine-auth"
-
 export const authProvider: AuthProvider = {
   login: async ({ email, password }) => {
     if (email && password) {
@@ -91,18 +89,6 @@ export const authProvider: AuthProvider = {
       console.error("error refreshing tokens: ", error)
       throw error
     }
-  },
-  getPermissions: async () => null,
-  getIdentity: async () => {
-    const token = localStorage.getItem(TOKEN_KEY)
-    if (token) {
-      return {
-        id: 1,
-        name: "John Doe",
-        avatar: "https://i.pravatar.cc/300",
-      }
-    }
-    return null
   },
   onError: async (error) => {
     console.error(error)

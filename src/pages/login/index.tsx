@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { authProvider } from "@/providers/authProvider"
+import { authProvider } from "@/providers/auth-provider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginFormTypes, useLogin } from "@refinedev/core"
 import Cookies from "js-cookie"

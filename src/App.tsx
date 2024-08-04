@@ -1,4 +1,4 @@
-import { Car, Cube, User } from "@phosphor-icons/react"
+import { Cube, User } from "@phosphor-icons/react"
 import { Authenticated, Refine } from "@refinedev/core"
 import routerBindings, { CatchAllNavigate } from "@refinedev/react-router-v6"
 import dataProvider from "@refinedev/simple-rest"
@@ -8,13 +8,12 @@ import "./App.css"
 import { Layout } from "./components/layout"
 import { RedirectAuthUser } from "./components/redirectAuthUser"
 import { BreadCrumb } from "./components/templates"
-import CategoryList from "./pages/CMS/ads"
-import PostList from "./pages/CMS/posts"
-import { CreateUser } from "./pages/create-user"
 import { Dashboard } from "./pages/dashboard"
 import { Errorcomponent } from "./pages/error"
 import { Login } from "./pages/login"
-import { authProvider } from "./providers/authProvider"
+import { CreateUser } from "./pages/users/create-users"
+import { Empty } from "./pages/users/empty"
+import { authProvider } from "./providers/auth-provider"
 
 function App() {
   return (
@@ -30,26 +29,21 @@ function App() {
             list: "/",
           },
           {
-            name: "Create User",
+            name: "Users",
             icon: <User size={16} />,
-            list: "/create-user",
           },
           {
-            name: "CMS",
-            icon: <Car size={16} />,
-          },
-          {
-            name: "posts",
-            list: "/CMS/posts",
+            name: "Create Users",
+            list: "/users/create-users",
             meta: {
-              parent: "CMS",
+              parent: "Users",
             },
           },
           {
-            name: "Ads",
-            list: "/CMS/ads",
+            name: "Empty",
+            list: "/users/empty",
             meta: {
-              parent: "CMS",
+              parent: "Users",
               canDelete: true,
             },
           },
@@ -76,31 +70,23 @@ function App() {
                 </BreadCrumb>
               }
             />
-            <Route
-              path="/create-user"
-              element={
-                <BreadCrumb>
-                  <CreateUser />
-                </BreadCrumb>
-              }
-            />
-            <Route path="CMS">
-              <Route path="posts">
+            <Route path="users">
+              <Route path="create-users">
                 <Route
                   index
                   element={
                     <BreadCrumb>
-                      <PostList />
+                      <CreateUser />
                     </BreadCrumb>
                   }
                 />
               </Route>
-              <Route path="Ads">
+              <Route path="empty">
                 <Route
                   index
                   element={
                     <BreadCrumb>
-                      <CategoryList />
+                      <Empty />
                     </BreadCrumb>
                   }
                 />
