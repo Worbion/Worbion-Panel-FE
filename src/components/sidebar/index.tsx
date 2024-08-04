@@ -1,15 +1,24 @@
 import { SignOut } from "@phosphor-icons/react"
 import { useLogout, useMenu } from "@refinedev/core"
 import { motion } from "framer-motion"
-import { NavLink } from "react-router-dom"
 
 import { useSidebarStore } from "../../../store/useLayoutStore"
 import { Button } from "../ui/button"
+import { Menu } from "./menu"
 
 export const Sidebar = () => {
   const { mutate: logout } = useLogout()
+
   const { menuItems, selectedKey } = useMenu()
   const { setIsOpen } = useSidebarStore()
+
+  const isChildSelected = (children: any) => {
+    return children.some(
+      (child: any) =>
+        child.key === selectedKey ||
+        (child.children && isChildSelected(child.children))
+    )
+  }
 
   return (
     <motion.nav
@@ -22,25 +31,12 @@ export const Sidebar = () => {
       <a className="text-zinc-900 text-2xl px-4" href="/">
         Worbion.
       </a>
-      <ul className="flex-grow space-y-2 my-6">
-        {menuItems.map(({ key, label, route, icon }) => {
-          const isSelected = key === selectedKey
-          return (
-            <li key={key}>
-              <NavLink
-                to={route ?? "/"}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-x-3 px-4 py-2 font-medium text-[15px] rounded ${
-                  isSelected ? "text-zinc-900 bg-zinc-100" : "text-zinc-600"
-                }`}
-              >
-                {icon}
-                {label}
-              </NavLink>
-            </li>
-          )
-        })}
-      </ul>
+      <Menu
+        menuItems={menuItems}
+        isChildSelected={isChildSelected}
+        setIsOpen={setIsOpen}
+        selectedKey={selectedKey}
+      />
       <Button
         variant="outline"
         className="flex gap-x-4 w-full mt-auto"

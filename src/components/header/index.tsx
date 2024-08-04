@@ -14,8 +14,47 @@ export const Header = () => {
 
   const { menuItems } = useMenu()
   const location = useLocation()
-  const currentMenuItem = menuItems.find(
-    (item) => item.route === location.pathname
+
+  interface MenuItem {
+    key: string
+    label: string
+    route?: string
+    icon?: React.ReactNode
+    children?: MenuItem[]
+  }
+
+  /**
+   * Recursive function to find the current menu item or sub-item based on the given path.
+   *
+   * @param items - Array of menu items to search through.
+   * @param path - The current location path to match with menu item routes.
+   * @returns The found MenuItem or null if no matching item is found.
+   */
+  const findCurrentMenuItem = (
+    items: MenuItem[],
+    path: string
+  ): MenuItem | null => {
+    for (const item of items) {
+      // If the item's route matches the given path, return the item
+      if (item.route === path) {
+        return item
+      }
+      // If the item has children, recursively search through them
+      if (item.children) {
+        const found = findCurrentMenuItem(item.children, path)
+        // If a matching item is found in the children, return it
+        if (found) {
+          return found
+        }
+      }
+    }
+    // If no matching item is found, return null
+    return null
+  }
+
+  const currentMenuItem = findCurrentMenuItem(
+    menuItems as MenuItem[],
+    location.pathname
   )
 
   return (

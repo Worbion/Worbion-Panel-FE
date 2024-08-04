@@ -1,4 +1,4 @@
-import { authProvider } from "@/authProvider"
+import { authProvider } from "@/providers/authProvider"
 import Cookies from "js-cookie"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"

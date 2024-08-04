@@ -1,4 +1,3 @@
-import { authProvider } from "@/authProvider"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -9,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { authProvider } from "@/providers/authProvider"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginFormTypes, useLogin } from "@refinedev/core"
 import Cookies from "js-cookie"
@@ -41,6 +41,7 @@ export const Login = () => {
       if (accessToken) {
         navigate("/")
       } else if (!accessToken && refreshToken) {
+        //@ts-ignore
         await authProvider.refreshTokens()
         const newAccessToken = Cookies.get("access_token")
         if (newAccessToken) {

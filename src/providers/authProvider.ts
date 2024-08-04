@@ -2,8 +2,8 @@ import type { AuthProvider } from "@refinedev/core"
 import axios from "axios"
 import Cookies from "js-cookie"
 
-import { useAuthStore } from "../store/useAuthStore"
-import axiosInstance from "./network-instances/axiosInstance"
+import { useAuthStore } from "../../store/useAuthStore"
+import axiosInstance from "../network-instances/axiosInstance"
 
 export const TOKEN_KEY = "refine-auth"
 

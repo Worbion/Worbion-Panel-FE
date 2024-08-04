@@ -8,7 +8,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { PropsWithChildren } from "react"
@@ -47,9 +46,12 @@ export const BreadCrumb: React.FC<PropsWithChildren> = ({ children }) => {
                       <BreadcrumbLink>{capitalize(value)}</BreadcrumbLink>
                     ) : (
                       // Otherwise, render it as a link
-                      <BreadcrumbLink href={to}>
-                        {capitalize(value)}
-                      </BreadcrumbLink>
+                      <div className="flex items-center gap-x-2">
+                        <BreadcrumbLink href={to}>
+                          {capitalize(value)}
+                        </BreadcrumbLink>
+                        <BreadcrumbSeparator />
+                      </div>
                     )}
                   </BreadcrumbItem>
                 </span>
