@@ -8,6 +8,7 @@ import "./App.css"
 import { Layout } from "./components/layout"
 import { RedirectAuthUser } from "./components/redirectAuthUser"
 import { BreadCrumb } from "./components/templates"
+import axiosInstance from "./network-instances/axiosInstance"
 import { Dashboard } from "./pages/dashboard"
 import { Errorcomponent } from "./pages/error"
 import { Login } from "./pages/login"
@@ -19,17 +20,23 @@ function App() {
   return (
     <BrowserRouter>
       <Refine
-        dataProvider={dataProvider("https://api.fake-rest.refine.dev")}
+        dataProvider={dataProvider("https://api.worbion.com", axiosInstance)}
         authProvider={authProvider}
         routerProvider={routerBindings}
         resources={[
           {
             name: "Dashboard",
-            icon: <Cube size={16} />,
             list: "/",
+            meta: {
+              label: "Ana Sayfa",
+            },
+            icon: <Cube size={16} />,
           },
           {
             name: "Users",
+            meta: {
+              label: "Kullanıcılar",
+            },
             icon: <User size={16} />,
           },
           {
@@ -37,6 +44,7 @@ function App() {
             list: "/users/create-users",
             meta: {
               parent: "Users",
+              label: "Kullanıcı Oluştur",
             },
           },
           {
@@ -44,6 +52,7 @@ function App() {
             list: "/users/empty",
             meta: {
               parent: "Users",
+              label: "Boş",
               canDelete: true,
             },
           },
